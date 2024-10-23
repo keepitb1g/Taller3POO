@@ -1,32 +1,34 @@
 package org.example;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.ArrayList;
-import java.util.List;
 
 class EquipoTest {
 
     @Test
-    void testCrearEquipo() {
+    void testAsignarDeportista() {
         Equipo equipo = new Equipo();
-        equipo.setNombre("Equipo A");
-        assertEquals("Equipo A", equipo.getNombre());
+        Deportista deportista = new Deportista();
+        deportista.setNombre("Luis");
+
+        equipo.agregarDeportista(deportista);
+        assertEquals(1, equipo.getDeportistas().size());
+
+        Equipo equipo2 = new Equipo();
+        equipo2.agregarDeportista(deportista);
+        assertFalse(equipo2.getDeportistas().contains(deportista)); // duplicados
     }
 
     @Test
-    void testAsignarDeportistasYEntrenador() {
+    void testAsignarEntrenador() {
         Equipo equipo = new Equipo();
-        equipo.setNombre("Equipo A");
-
-        Deportista deportista = new Deportista();
-        deportista.setNombre("Luis");
-        equipo.agregarDeportista(deportista);
-
         Entrenador entrenador = new Entrenador();
         entrenador.setNombre("Carlos");
-        equipo.setEntrenador(entrenador);
 
-        assertEquals(1, equipo.getDeportistas().size());
-        assertEquals(entrenador, equipo.getEntrenador());
+        equipo.setEntrenador(entrenador);
+        assertEquals("Carlos", equipo.getEntrenador().getNombre());
+
+        Equipo equipo2 = new Equipo();
+        equipo2.setEntrenador(entrenador);
+        assertNull(equipo2.getEntrenador()); // solo 1 entrenador
     }
 }
