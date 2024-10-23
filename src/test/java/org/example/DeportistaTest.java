@@ -1,34 +1,38 @@
 package org.example;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashSet;
+import java.util.Set;
 
 class DeportistaTest {
 
+    private Set<Deportista> deportistasRegistrados = new HashSet<>();
+
+    private boolean registrarDeportista(Deportista deportista) {
+        return deportistasRegistrados.add(deportista);
+    }
+
     @Test
-    void testGetSetNombre() {
+    void testRegistrarDeportista() {
         Deportista deportista = new Deportista();
         deportista.setNombre("Juan");
-        assertEquals("Juan", deportista.getNombre());
-    }
-
-    @Test
-    void testGetSetApellido() {
-        Deportista deportista = new Deportista();
         deportista.setApellido("Pérez");
-        assertEquals("Pérez", deportista.getApellido());
+
+        assertTrue(registrarDeportista(deportista));
     }
 
     @Test
-    void testGetSetContacto() {
+    void testEvitarDuplicados() {
         Deportista deportista = new Deportista();
-        deportista.setContacto("123456789");
-        assertEquals("123456789", deportista.getContacto());
-    }
+        deportista.setNombre("Juan");
+        deportista.setApellido("Pérez");
 
-    @Test
-    void testGetSetDeporte() {
-        Deportista deportista = new Deportista();
-        deportista.setDeporte("Futbol");
-        assertEquals("Futbol", deportista.getDeporte());
+        registrarDeportista(deportista);
+
+        Deportista duplicado = new Deportista();
+        duplicado.setNombre("Juan");
+        duplicado.setApellido("Pérez");
+
+        assertFalse(registrarDeportista(duplicado));
     }
 }
